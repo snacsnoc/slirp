@@ -78,10 +78,7 @@ int cfg_unit;
 int ctl_password_ok;
 char *ctl_password;
 
-void
-config(file, unit)
-	char *file;
-	int unit;
+void config(char *file, int unit)
 {
 	FILE *cfg;
 	char buff[256];
@@ -99,11 +96,7 @@ config(file, unit)
    	fclose(cfg);
 }
 
-int
-do_config(buff, inso, type)
-	char *buff;
-	struct socket *inso;
-	int type;
+int do_config(char *buff, struct socket *inso, int type)
 {
 	int str_len, i = 0, is_sprintf = 0;
 	
@@ -180,10 +173,7 @@ done:
 		return 0;
 }
 
-int
-get_port(buff, proto_tcp)
-	char *buff;
-	int proto_tcp;
+int get_port(char *buff, int proto_tcp)
 {
 	int x;
 	struct servent *servp;
@@ -201,10 +191,7 @@ get_port(buff, proto_tcp)
 	return x;
 }
 
-int
-cfg_redir_x(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_redir_x(char *buff, struct socket *inso)
 {
 	u_int32_t laddr = 0;
 	int display = 0;
@@ -262,10 +249,7 @@ cfg_redir_x(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_setunit(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_setunit(char *buff, struct socket *inso)
 {
 	int x;
 	
@@ -287,10 +271,7 @@ cfg_setunit(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_redir(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_redir(char *buff, struct socket *inso)
 {
 	u_int32_t laddr;
 	int port = 0, lport;
@@ -387,10 +368,7 @@ cfg_redir(buff, inso)
 }
 
 #ifndef FULL_BOLT
-int
-cfg_baudrate(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_baudrate(char *buff, struct socket *inso)
 {
 	int x;
 	struct ttys *ttyp = ttys_unit[cfg_unit];
@@ -413,10 +391,7 @@ cfg_baudrate(buff, inso)
 }
 #endif
 
-int
-cfg_wait(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_wait(char *buff, struct socket *inso)
 {
 	if (buff) {
 		int x = atoi(buff);
@@ -436,10 +411,7 @@ cfg_wait(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_sp_addr(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_sp_addr(char *buff, struct socket *inso)
 {
 	struct in_addr tmp_addr;
 	
@@ -454,10 +426,7 @@ cfg_sp_addr(buff, inso)
 }
 
 
-int
-cfg_ctl_addr(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_ctl_addr(char *buff, struct socket *inso)
 {
 	struct in_addr tmp_addr;
 	
@@ -472,10 +441,7 @@ cfg_ctl_addr(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_compress(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_compress(char *buff, struct socket *inso)
 {
 	if_comp &= ~(IF_AUTOCOMP|IF_NOCOMPRESS);
 	if_comp |= IF_COMPRESS;
@@ -485,10 +451,7 @@ cfg_compress(buff, inso)
 	return CFG_OK;
 }
 	
-int
-cfg_host_addr(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_host_addr(char *buff, struct socket *inso)
 {
 	struct in_addr tmp_addr;
 	
@@ -503,10 +466,7 @@ cfg_host_addr(buff, inso)
 }
 
 
-int
-cfg_add_exec(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_add_exec(char *buff, struct socket *inso)
 {
 	char str[256];
 	char str2[256];
@@ -549,10 +509,7 @@ cfg_add_exec(buff, inso)
 }
 
 
-int
-cfg_add_ptyexec(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_add_ptyexec(char *buff, struct socket *inso)
 {
 	char str[256];
 	char str2[256];
@@ -589,10 +546,7 @@ cfg_add_ptyexec(buff, inso)
 }
 
 
-int
-cfg_shell(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_shell(char *buff, struct socket *inso)
 {
 	char str[256];
 	
@@ -605,10 +559,7 @@ cfg_shell(buff, inso)
 }
 
 
-int
-cfg_debug(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_debug(char *buff, struct socket *inso)
 {
 	int x;
 	
@@ -624,10 +575,7 @@ cfg_debug(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_logstart(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_logstart(char *buff, struct socket *inso)
 {
 	char buff1[256];
 	char *bptr;
@@ -653,10 +601,7 @@ cfg_logstart(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_logstats(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_logstats(char *buff, struct socket *inso)
 {
 	dostats = 1;
 	
@@ -665,20 +610,14 @@ cfg_logstats(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_config(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_config(char *buff, struct socket *inso)
 {
 	config(buff, cfg_unit);
 	
 	return CFG_OK;
 }
 
-int
-cfg_help(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_help(char *buff, struct socket *inso)
 {
 	int i = 0;
 	int str_len;
@@ -744,10 +683,7 @@ cfg_help(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_stats(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_stats(char *buff, struct socket *inso)
 {
 	if (!strncmp(buff, "ip", 2))
 	   ipstats();
@@ -773,10 +709,7 @@ cfg_stats(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_echo(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_echo(char *buff, struct socket *inso)
 {
 	if (!buff) {
 		lprint("Echo is %s\r\n", do_echo?"on":"off");
@@ -794,9 +727,7 @@ cfg_echo(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_kill_close(x, type)
-	int x, type;
+int cfg_kill_close(int x, int type)
 {
 	struct socket *so;
 	
@@ -839,10 +770,7 @@ cfg_kill_close(x, type)
 
 int cfg_quitting;
 
-int
-cfg_quit(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_quit(char *buff, struct socket *inso)
 {
 	lprint("Goodbye\r\n");
 	tcp_sockclosed(sototcpcb(inso));
@@ -851,10 +779,7 @@ cfg_quit(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_pass(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_pass(char *buff, struct socket *inso)
 {
 	char *ptr = buff;
 	
@@ -871,30 +796,21 @@ cfg_pass(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_kill(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_kill(char *buff, struct socket *inso)
 {
 	cfg_kill_close(atoi(buff), 1);
 	
 	return CFG_OK;
 }
 
-int
-cfg_close(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_close(char *buff, struct socket *inso)
 {
 	cfg_kill_close(atoi(buff), 0);
 	
 	return CFG_OK;
 }
 	
-int
-cfg_exec(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_exec(char *buff, struct socket *inso)
 {
 	fork_exec(inso, buff, 0);
 	soisfconnected(inso);
@@ -904,9 +820,7 @@ cfg_exec(buff, inso)
 }
 
 int
-cfg_ptyexec(buff, inso)
-	char *buff;
-	struct socket *inso;
+cfg_ptyexec(char *buff, struct socket *inso)
 {
 	fork_exec(inso, buff, 1);
 	soisfconnected(inso);
@@ -915,20 +829,14 @@ cfg_ptyexec(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_add_emu(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_add_emu(char *buff, struct socket *inso)
 {
 	add_emu(buff);
 	
 	return CFG_OK;
 }
 
-int
-cfg_socket(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_socket(char *buff, struct socket *inso)
 {
 	struct sockaddr_in addr;
 	char pwd[256];
@@ -1024,10 +932,7 @@ cfg_socket(buff, inso)
 }
 
 
-int
-cfg_dns(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_dns(char *buff, struct socket *inso)
 {
 	struct in_addr tmp_addr;
 	
@@ -1042,10 +947,7 @@ cfg_dns(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_keepalive(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_keepalive(char *buff, struct socket *inso)
 {
 	int tmp;
 	
@@ -1064,20 +966,14 @@ cfg_keepalive(buff, inso)
 	return CFG_OK;
 }
 
-int
-cfg_version(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_version(char *buff, struct socket *inso)
 {
 	lprint("Slirp v%s (%s)\r\n", SLIRP_VERSION, SLIRP_STATUS);
 	
 	return CFG_OK;
 }
 
-int
-cfg_towrite_max(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_towrite_max(char *buff, struct socket *inso)
 {
 	int tmp;
 	
@@ -1097,10 +993,7 @@ cfg_towrite_max(buff, inso)
 
 #ifdef USE_PPP
 
-int
-cfg_ppp_exit(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_ppp_exit(char *buff, struct socket *inso)
 {
 	ppp_exit = 1;
 	
@@ -1109,9 +1002,7 @@ cfg_ppp_exit(buff, inso)
 	return CFG_OK;
 }
 
-void
-setipdefault(unit)
-	int unit;
+void setipdefault(int unit)
 {
 	struct hostent *hp;
 	u_int32_t local;
@@ -1144,12 +1035,7 @@ setipdefault(unit)
  * Quotes, white-space and \ may be escaped with \.
  * \<newline> is ignored.
  */
-int
-getword(f, word, newlinep, filename)
-    FILE *f;
-    char *word;
-    int *newlinep;
-    char *filename;
+int getword(FILE *f, char *word, int *newlinep, char *filename)
 {
 	int c, len, escape;
 	int quoted;
@@ -1244,9 +1130,7 @@ getword(f, word, newlinep, filename)
 	return 1;
 }
 
-u_int32_t
-GetMask(addr)
-    u_int32_t addr;
+u_int32_t GetMask(u_int32_t addr)
 {
 	return(netmask);
 }
@@ -1255,11 +1139,7 @@ GetMask(addr)
 /*
  * number_option - parse a numeric parameter for an option
  */
-u_int
-number_option(str, valp, base)
-    char *str;
-    u_int32_t *valp;
-    int base;
+u_int number_option(char *str, u_int32_t *valp, int base)
 {
 	char *bptr;
 	
@@ -1277,10 +1157,7 @@ number_option(str, valp, base)
  * the base is assumed to be 0, and *valp is not changed
  * if there is an error.
  */
-u_int
-int_option(str, valp)
-    char *str;
-    int *valp;
+u_int int_option(char *str, int *valp)
 {
 	u_int32_t v;
 	
@@ -1292,10 +1169,7 @@ int_option(str, valp)
 
 #endif
 
-int
-cfg_ppp(buff, inso)
-	char *buff;
-	struct socket *inso;
+int cfg_ppp(char *buff, struct socket *inso)
 {
 #ifdef USE_PPP
 	struct ttys *ttyp = ttys_unit[cfg_unit];
@@ -1323,10 +1197,7 @@ cfg_ppp(buff, inso)
 /*
  * setdebug - Set debug (command line argument).
  */
-int
-setdebug(buff, inso)
-	char *buff;
-	struct socket *inso;
+int setdebug(char *buff, struct socket *inso)
 {
 	if (logfile)
 	   fclose(logfile);
@@ -1343,10 +1214,7 @@ setdebug(buff, inso)
 /*
  * noopt - Disable all options.
  */
-int
-noopt(buff, inso)
-	char *buff;
-	struct socket *inso;
+int noopt(char *buff, struct socket *inso)
 {
 	BZERO((char *) &lcp_wantoptions[cfg_unit], sizeof (struct lcp_options));
 	BZERO((char *) &lcp_allowoptions[cfg_unit], sizeof (struct lcp_options));
@@ -1359,10 +1227,7 @@ noopt(buff, inso)
 /*
  * noaccomp - Disable Address/Control field compression negotiation.
  */
-int
-noaccomp(buff, inso)
-        char *buff;
-        struct socket *inso;
+int noaccomp(char *buff, struct socket *inso)
 {
 	lcp_wantoptions[cfg_unit].neg_accompression = 0;
 	lcp_allowoptions[cfg_unit].neg_accompression = 0;
@@ -1374,10 +1239,7 @@ noaccomp(buff, inso)
 /*
  * noasyncmap - Disable async map negotiation.
  */
-int
-noasyncmap(buff, inso)
-        char *buff;
-        struct socket *inso;
+int noasyncmap(char *buff, struct socket *inso)
 {
 	lcp_wantoptions[cfg_unit].neg_asyncmap = 0;
 	lcp_allowoptions[cfg_unit].neg_asyncmap = 0;
@@ -1389,10 +1251,7 @@ noasyncmap(buff, inso)
 /*
  * noipaddr - Disable IP address negotiation.
  */
-int
-noipaddr(buff, inso)
-        char *buff;
-        struct socket *inso;
+int noipaddr(char *buff, struct socket *inso)
 {
 	ipcp_wantoptions[cfg_unit].neg_addr = 0;
 	ipcp_allowoptions[cfg_unit].neg_addr = 0;
@@ -1404,10 +1263,7 @@ noipaddr(buff, inso)
 /*
  * nomagicnumber - Disable magic number negotiation.
  */
-int
-nomagicnumber(buff, inso)
-        char *buff;
-        struct socket *inso;
+int nomagicnumber(char *buff, struct socket *inso)
 {
 	lcp_wantoptions[cfg_unit].neg_magicnumber = 0;
 	lcp_allowoptions[cfg_unit].neg_magicnumber = 0;
@@ -1419,10 +1275,7 @@ nomagicnumber(buff, inso)
 /*
  * nomru - Disable mru negotiation.
  */
-int
-nomru(buff, inso)
-        char *buff;
-        struct socket *inso;
+int nomru(char *buff, struct socket *inso)
 {
 	lcp_wantoptions[cfg_unit].neg_mru = 0;
 	lcp_allowoptions[cfg_unit].neg_mru = 0;
@@ -1435,10 +1288,7 @@ nomru(buff, inso)
 /*
  * setmru - Set MRU for negotiation.
  */
-int
-setmru(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setmru(char *opt_arg, struct socket *inso)
 {
 	long mru;
 	
@@ -1458,10 +1308,7 @@ setmru(opt_arg, inso)
 /*
  * setmtu - Set the largest MTU we'll use.
  */
-int
-setmtu(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setmtu(char *opt_arg, struct socket *inso)
 {
 	long mtu;
 	
@@ -1486,10 +1333,7 @@ setmtu(opt_arg, inso)
 /*
  * nopcomp - Disable Protocol field compression negotiation.
  */
-int
-nopcomp(buff, inso)
-        char *buff;
-        struct socket *inso;
+int nopcomp(char *buff, struct socket *inso)
 {
 	lcp_wantoptions[cfg_unit].neg_pcompression = 0;
 	lcp_allowoptions[cfg_unit].neg_pcompression = 0;
@@ -1501,10 +1345,7 @@ nopcomp(buff, inso)
  * setsilent - Set silent mode (don't start sending LCP configure-requests
  * until we get one from the peer).
  */
-int
-setinitopt(buff, inso)
-        char *buff;
-        struct socket *inso;
+int setinitopt(char *buff, struct socket *inso)
 {
 	lcp_wantoptions[cfg_unit].silent = 0;
 	
@@ -1515,10 +1356,7 @@ setinitopt(buff, inso)
 /*
  * nopap - Disable PAP authentication with peer.
  */
-int
-nopap(buff, inso)
-        char *buff;
-        struct socket *inso;
+int nopap(char *buff, struct socket *inso)
 {
 	lcp_allowoptions[cfg_unit].neg_upap = 0;
 	
@@ -1529,10 +1367,7 @@ nopap(buff, inso)
 /*
  * reqpap - Require PAP authentication from peer.
  */
-int
-reqpap(buff, inso)
-        char *buff;
-        struct socket *inso;
+int reqpap(char *buff, struct socket *inso)
 {
 	lcp_wantoptions[cfg_unit].neg_upap = 1;
 	auth_required = 1;
@@ -1544,10 +1379,7 @@ reqpap(buff, inso)
 /*
  * setupapfile - specifies UPAP info for authenticating with peer.
  */
-int
-setupapfile(opt_arg, inso)
-	char *opt_arg;
-	struct socket *inso;
+int setupapfile(char *opt_arg, struct socket *inso)
 {
 	FILE * ufile;
 	int l;
@@ -1584,10 +1416,7 @@ setupapfile(opt_arg, inso)
 /*
  * nochap - Disable CHAP authentication with peer.
  */
-int
-nochap(buff, inso)
-        char *buff;
-        struct socket *inso;
+int nochap(char *buff, struct socket *inso)
 {
 	lcp_allowoptions[cfg_unit].neg_chap = 0;
 	
@@ -1598,10 +1427,7 @@ nochap(buff, inso)
 /*
  * reqchap - Require CHAP authentication from peer.
  */
-int
-reqchap(buff, inso)
-        char *buff;
-        struct socket *inso;
+int reqchap(char *buff, struct socket *inso)
 {
 	lcp_wantoptions[cfg_unit].neg_chap = 1;
 	auth_required = 1;
@@ -1613,10 +1439,7 @@ reqchap(buff, inso)
 /*
  * setnovj - disable vj compression
  */
-int
-setnovj(buff, inso)
-        char *buff;
-        struct socket *inso;
+int setnovj(char *buff, struct socket *inso)
 {
 	if_comp &= ~(IF_AUTOCOMP|IF_COMPRESS);
 	if_comp |= IF_NOCOMPRESS;
@@ -1630,10 +1453,7 @@ setnovj(buff, inso)
 /*
  * setnovjccomp - disable VJ connection-ID compression
  */
-int
-setnovjccomp(buff, inso)
-        char *buff;
-        struct socket *inso;
+int setnovjccomp(char *buff, struct socket *inso)
 {
 	ipcp_wantoptions[cfg_unit].cflag = 0;
 	ipcp_allowoptions[cfg_unit].cflag = 0;
@@ -1645,10 +1465,7 @@ setnovjccomp(buff, inso)
 /*
  * setvjslots - set maximum number of connection slots for VJ compression
  */
-int
-setvjslots(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setvjslots(char *opt_arg, struct socket *inso)
 {
 	int value;
 	
@@ -1668,10 +1485,7 @@ setvjslots(opt_arg, inso)
 /*
  * setdomain - Set domain name to append to hostname 
  */
-int
-setdomain(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setdomain(char *opt_arg, struct socket *inso)
 {
 	strncat(hostname, opt_arg, MAXNAMELEN - strlen(hostname));
 	hostname[MAXNAMELEN-1] = 0;
@@ -1683,10 +1497,7 @@ setdomain(opt_arg, inso)
 /*
  * setasyncmap - add bits to asyncmap (what we request peer to escape).
  */
-int
-setasyncmap(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setasyncmap(char *opt_arg, struct socket *inso)
 {
 	u_int32_t asyncmap;
 	
@@ -1702,10 +1513,7 @@ setasyncmap(opt_arg, inso)
 /*
  * setescape - add chars to the set we escape on transmission.
  */
-int
-setescape(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setescape(char *opt_arg, struct socket *inso)
 {
 	int n, n2, ret, num = 0;
 	char *p, *endp;
@@ -1764,10 +1572,7 @@ setescape(opt_arg, inso)
 /*
  * setipcpaccl - accept peer's idea of our address
  */
-int
-setipcpaccl(buff, inso)
-        char *buff;
-        struct socket *inso;
+int setipcpaccl(char *buff, struct socket *inso)
 {
 	ipcp_wantoptions[cfg_unit].accept_local = 1;
 	
@@ -1778,30 +1583,21 @@ setipcpaccl(buff, inso)
 /*
  * setipcpaccr - accept peer's idea of its address
  */
-int
-setipcpaccr(buff, inso)
-        char *buff;
-        struct socket *inso;
+int setipcpaccr(char *buff, struct socket *inso)
 {
 	ipcp_wantoptions[cfg_unit].accept_remote = 1;
 	
 	return CFG_OK;
 }
 
-int
-setusehostname(buff, inso)
-        char *buff;
-        struct socket *inso;
+int setusehostname(char *buff, struct socket *inso)
 {
 	usehostname = 1;
 	
 	return CFG_OK;
 }
 
-int
-setname(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setname(char *opt_arg, struct socket *inso)
 {
 	if (our_name[cfg_unit] == 0) {
 		strncpy(our_name, opt_arg, MAXNAMELEN);
@@ -1811,10 +1607,7 @@ setname(opt_arg, inso)
 	return CFG_OK;
 }
 
-int
-set_user(opt_arg, inso)
-	char *opt_arg;
-	struct socket *inso;
+int set_user(char *opt_arg, struct socket *inso)
 {
 	strncpy(user, opt_arg, MAXNAMELEN);
 	user[MAXNAMELEN-1] = 0;
@@ -1822,10 +1615,7 @@ set_user(opt_arg, inso)
 	return CFG_OK;
 }
 
-int
-setremote(opt_arg, inso)
-	char *opt_arg;
-	struct socket *inso;
+int setremote(char *opt_arg, struct socket *inso)
 {
 	strncpy(remote_name, opt_arg, MAXNAMELEN);
 	remote_name[MAXNAMELEN-1] = 0;
@@ -1833,30 +1623,21 @@ setremote(opt_arg, inso)
 	return CFG_OK;
 }
 
-int
-setauth(buff, inso)
-        char *buff;
-        struct socket *inso;
+int setauth(char *buff, struct socket *inso)
 {
 	auth_required = 1;
 	
 	return CFG_OK;
 }
 
-int
-setproxyarp(buff, inso)
-        char *buff;
-        struct socket *inso;
+int setproxyarp(char *buff, struct socket *inso)
 {
 	ipcp_wantoptions[cfg_unit].proxy_arp = 1;
 	
 	return CFG_OK;
 }
 
-int
-setdologin(buff, inso)
-        char *buff;
-        struct socket *inso;
+int setdologin(char *buff, struct socket *inso)
 {
 	uselogin = 1;
 	
@@ -1867,18 +1648,12 @@ setdologin(buff, inso)
  * Functions to set the echo interval for modem-less monitors
  */
 
-int
-setlcpechointv(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setlcpechointv(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &lcp_echo_interval);
 }
 
-int
-setlcpechofails(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setlcpechofails(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &lcp_echo_fails);
 }
@@ -1887,121 +1662,77 @@ setlcpechofails(opt_arg, inso)
  * Functions to set timeouts, max transmits, etc.
  */
 int
-setlcptimeout(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+setlcptimeout(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &lcp_fsm[cfg_unit].timeouttime);
 }
 
-int
-setlcpterm(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setlcpterm(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &lcp_fsm[cfg_unit].maxtermtransmits);
 }
 
-int
-setlcpconf(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setlcpconf(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &lcp_fsm[cfg_unit].maxconfreqtransmits);
 }
 
-int
-setlcpfails(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setlcpfails(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &lcp_fsm[cfg_unit].maxnakloops);
 }
 
-int
-setipcptimeout(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setipcptimeout(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &ipcp_fsm[cfg_unit].timeouttime);
 }
 
-int
-setipcpterm(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setipcpterm(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &ipcp_fsm[cfg_unit].maxtermtransmits);
 }
 
-int
-setipcpconf(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setipcpconf(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &ipcp_fsm[cfg_unit].maxconfreqtransmits);
 }
 
-int
-setipcpfails(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setipcpfails(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &lcp_fsm[cfg_unit].maxnakloops);
 }
 
-int
-setpaptimeout(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setpaptimeout(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &upap[cfg_unit].us_timeouttime);
 }
 
-int
-setpapreqs(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setpapreqs(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &upap[cfg_unit].us_maxtransmits);
 }
 
-int
-setchaptimeout(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setchaptimeout(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &chap[cfg_unit].timeouttime);
 }
 
-int
-setchapchal(opt_arg, inso)
-	char *opt_arg;
-        struct socket *inso;
+int setchapchal(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &chap[cfg_unit].max_transmits);
 }
 
-int
-setchapintv(opt_arg, inso)
-	char *opt_arg;
-	struct socket *inso;
+int setchapintv(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &chap[cfg_unit].chal_interval);
 }
 
-int
-setpapreqtime(opt_arg, inso)
-	char *opt_arg;
-	struct socket *inso;
+int setpapreqtime(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &upap[cfg_unit].us_reqtimeout);
 }
 
-int
-setbsdcomp(opt_arg, inso)
-	char *opt_arg;
-	struct socket *inso;
+int setbsdcomp(char *opt_arg, struct socket *inso)
 {
 	int rbits, abits;
 	char *str, *endp;
@@ -2036,10 +1767,7 @@ setbsdcomp(opt_arg, inso)
 	return CFG_OK;
 }
 
-int
-setnobsdcomp(opt_arg, inso)
-	char *opt_arg;
-	struct socket *inso;
+int setnobsdcomp(char *opt_arg, struct socket *inso)
 {
 	ccp_wantoptions[cfg_unit].bsd_compress = 0;
 	ccp_allowoptions[cfg_unit].bsd_compress = 0;
@@ -2047,10 +1775,7 @@ setnobsdcomp(opt_arg, inso)
 	return CFG_OK;
 }
 
-int
-setpapcrypt(opt_arg, inso)
-	char *opt_arg;
-	struct socket *inso;
+int setpapcrypt(char *opt_arg, struct socket *inso)
 {
 	cryptpap = 1;
 	
@@ -2058,6 +1783,8 @@ setpapcrypt(opt_arg, inso)
 }
 
 #endif
+
+int show_x(char *buff, struct socket *inso);
 
 struct cfgtab cfg[] = {
 	  { "redir X", 0, cfg_redir_x, CFG_ANY, 0,

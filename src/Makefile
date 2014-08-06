@@ -4,15 +4,15 @@
 # Makefile for GNU Autoconf
 #
 
-version = 1.0.13
+version = 1.0.14pre1
 srcdir = .
 COMMON_DEFS =  -I. -I${srcdir} -DUSE_PPP #-DDEBUG
 CC = gcc
-CPP = gcc -E $(COMMON_DEFS) -DUSE_PPP -g -O2
-CFLAGS = $(COMMON_DEFS) -g -O2 -O2 -Wall -Wno-implicit -Wmissing-prototypes
-PPPCFLAGS = $(COMMON_DEFS) -g -O2 -O2 
+CPP = gcc -E $(COMMON_DEFS) -DUSE_PPP -g -O0
+CFLAGS = $(COMMON_DEFS) -g -O0 -Wall -Wno-implicit -Wmissing-prototypes
+PPPCFLAGS = $(COMMON_DEFS) -g -O0 
 SHELL = /bin/sh
-MKPRO = /usr/bin/perl ${srcdir}/mkpro
+MKPRO = /opt/local/bin/perl ${srcdir}/mkpro
 MAKEPRO = $(CPP) $< | $(MKPRO) > $@.bak && mv -f $@.bak $@
 
 PPPOBJS = auth.o bsd-comp.o ccp.o chap.o fsm.o ipcp.o lcp.o magic.o md5.o pppdfncs.o upap.o ppp.o
@@ -30,7 +30,7 @@ PROTO = ${srcdir}/cksum.p ${srcdir}/debug.p ${srcdir}/if.p ${srcdir}/ip_icmp.p\
 	${srcdir}/tcp_output.p ${srcdir}/tcp_subr.p ${srcdir}/tcp_timer.p\
 	${srcdir}/terminal.p ${srcdir}/ttys.p ${srcdir}/udp.p
 
-LIBS = -lcrypt -lnsl 
+LIBS = 
 
 COMMON_H = config.h ${srcdir}/slirp.h
 

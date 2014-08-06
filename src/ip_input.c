@@ -49,6 +49,14 @@ int ip_defttl;
 struct ipstat ipstat;
 struct ipq ipq;
 
+void ip_deq(struct ipasfrag *p);
+void ip_enq(register struct ipasfrag *p, register struct ipasfrag *prev);
+void ip_freef(struct ipq *fp);
+struct ip * ip_reass(register struct ipasfrag *ip, register struct ipq *fp);
+
+
+
+
 /*
  * IP initialization: fill in IP protocol switch table.
  * All protocols not implemented in kernel go to raw IP protocol handler.
@@ -67,9 +75,7 @@ ip_init()
  * Ip input routine.  Checksum and byte swap header.  If fragmented
  * try to reassemble.  Process options.  Pass to next level.
  */
-void
-ip_input(m)
-	struct mbuf *m;
+void ip_input(struct mbuf *m)
 {
 	register struct ip *ip;
 	int hlen;
@@ -235,10 +241,7 @@ bad:
  * reassembly of this datagram already exists, then it
  * is given as fp; otherwise have to make a chain.
  */
-struct ip *
-ip_reass(ip, fp)
-	register struct ipasfrag *ip;
-	register struct ipq *fp;
+struct ip * ip_reass(register struct ipasfrag *ip, register struct ipq *fp)
 {
 	register struct mbuf *m = dtom(ip);
 	register struct ipasfrag *q;
@@ -394,9 +397,7 @@ dropfrag:
  * Free a fragment reassembly header and all
  * associated datagrams.
  */
-void
-ip_freef(fp)
-	struct ipq *fp;
+void ip_freef(struct ipq *fp)
 {
 	register struct ipasfrag *q, *p;
 
@@ -414,9 +415,7 @@ ip_freef(fp)
  * Put an ip fragment on a reassembly chain.
  * Like insque, but pointers in middle of structure.
  */
-void
-ip_enq(p, prev)
-	register struct ipasfrag *p, *prev;
+void ip_enq(register struct ipasfrag *p, register struct ipasfrag *prev)
 {
 	DEBUG_CALL("ip_enq");
 	DEBUG_ARG("prev = %lx", (long)prev);
@@ -429,9 +428,7 @@ ip_enq(p, prev)
 /*
  * To ip_enq as remque is to insque.
  */
-void
-ip_deq(p)
-	register struct ipasfrag *p;
+void ip_deq(struct ipasfrag *p)
 {
 	((struct ipasfrag *)(p->ipf_prev))->ipf_next = p->ipf_next;
 	((struct ipasfrag *)(p->ipf_next))->ipf_prev = p->ipf_prev;
@@ -445,7 +442,7 @@ ip_deq(p)
 void
 ip_slowtimo()
 {
-	register struct ipq *fp;
+	struct ipq *fp;
 	
 	DEBUG_CALL("ip_slowtimo");
 	
@@ -677,10 +674,7 @@ bad:
  * will be moved, and return value is their length.
  * (XXX) should be deleted; last arg currently ignored.
  */
-void
-ip_stripoptions(m, mopt)
-	register struct mbuf *m;
-	struct mbuf *mopt;
+void ip_stripoptions(register struct mbuf *m, struct mbuf *mopt)
 {
 	register int i;
 	struct ip *ip = mtod(m, struct ip *);

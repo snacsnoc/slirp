@@ -3,6 +3,8 @@
  * User definable configuration options
  */
 
+#define USE_PPP 1
+
 /* Undefine if you don't want talk emulation */
 #define EMULATE_TALK 1
 
@@ -65,7 +67,7 @@
 #define HAVE_SYS_IOCTL_H 1
 
 /* Define if you have sys/filio.h */
-/* #undef HAVE_SYS_FILIO_H */
+#define HAVE_SYS_FILIO_H 1
 
 /* Define if you have strerror */
 #define HAVE_STRERROR 1
@@ -78,7 +80,7 @@
 /* #undef HAVE_SYS_TIME_H */
 
 /* Define if you have sys/bitypes.h */
-#define HAVE_SYS_BITYPES_H 1
+/* #undef HAVE_SYS_BITYPES_H */
 
 /* Define if the machine is big endian */
 /* #undef WORDS_BIGENDIAN */
@@ -111,7 +113,7 @@
 #define HAVE_SYS_SIGNAL_H 1
 
 /* Define if you have sys/stropts.h */
-#define HAVE_SYS_STROPTS_H 1
+/* #undef HAVE_SYS_STROPTS_H */
 
 /* Define to whatever your compiler thinks inline should be */
 #define inline inline
@@ -135,7 +137,7 @@
 /* #undef SIZEOF_INT */
 
 /* Define to sizeof(char *) */
-#define SIZEOF_CHAR_P 4
+#define SIZEOF_CHAR_P 8
 
 /* Define if you have random() */
 #define HAVE_RANDOM 1
@@ -174,7 +176,7 @@
 /* #undef GETTIMEOFDAY_ONE_ARG */
 
 /* Define if you have revoke() */
-/* #undef HAVE_REVOKE */
+#define HAVE_REVOKE 1
 
 /* Define if you have the sysv method of opening pty's (/dev/ptmx, etc.) */
 #define HAVE_GRANTPT 1
