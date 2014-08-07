@@ -275,7 +275,7 @@ extern int do_echo;
 #include <terminal.p>
 #include <ttys.p>
 #include <udp_p.h>
-#include <ip_icmp.p>
+#include <ip_icmp_p.h>
 
 #ifdef USE_PPP
 #define MIN_MRU MINMRU
