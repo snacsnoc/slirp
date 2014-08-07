@@ -1661,8 +1661,7 @@ int setlcpechofails(char *opt_arg, struct socket *inso)
 /*
  * Functions to set timeouts, max transmits, etc.
  */
-int
-setlcptimeout(char *opt_arg, struct socket *inso)
+int setlcptimeout(char *opt_arg, struct socket *inso)
 {
 	return int_option(opt_arg, &lcp_fsm[cfg_unit].timeouttime);
 }

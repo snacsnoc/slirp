@@ -260,7 +260,7 @@ extern int do_echo;
 #include <main.p>
 #include <mbuf.p>
 #include <misc_p.h>
-#include <options.p>
+#include <options_p.h>
 #ifdef USE_PPP
 #include <ppp.p>
 #endif
