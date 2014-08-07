@@ -15,17 +15,12 @@
  * }
  */
 
-void
-sbfree(sb)
-	struct sbuf *sb;
+void sbfree(struct sbuf *sb)
 {
 	free(sb->sb_data);
 }
 
-void
-sbdrop(sb, num)
-	struct sbuf *sb;
-	int num; 
+void sbdrop(struct sbuf *sb, int num)
 {
 	/* 
 	 * We can only drop how much we have
@@ -40,10 +35,7 @@ sbdrop(sb, num)
    
 }
 
-void
-sbreserve(sb, size)
-	struct sbuf *sb;
-	int size;
+void sbreserve(struct sbuf *sb, int size)
 {
 	if (sb->sb_data) {
 		/* Already alloced, realloc if necessary */
@@ -71,10 +63,7 @@ sbreserve(sb, size)
  * this prevents an unnecessary copy of the data
  * (the socket is non-blocking, so we won't hang)
  */
-void
-sbappend(so, m)
-	struct socket *so;
-	struct mbuf *m;
+void sbappend(struct socket *so, struct mbuf *m)
 {
 	int ret = 0;
 	
@@ -133,10 +122,7 @@ sbappend(so, m)
  * Copy the data from m into sb
  * The caller is responsible to make sure there's enough room
  */
-void
-sbappendsb(sb, m)
-	 struct sbuf *sb;
-	 struct mbuf *m;
+void sbappendsb(struct sbuf *sb, struct mbuf *m)
 {
 	int len, n,  nn;
 	
@@ -172,12 +158,7 @@ sbappendsb(sb, m)
  * Don't update the sbuf rptr, this will be
  * done in sbdrop when the data is acked
  */
-void
-sbcopy(sb, off, len, to)
-	struct sbuf *sb;
-	int off;
-	int len;
-	char *to;
+void sbcopy(struct sbuf *sb, int off, int len, char *to)
 {
 	char *from;
 	

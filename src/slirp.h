@@ -264,7 +264,7 @@ extern int do_echo;
 #ifdef USE_PPP
 #include <ppp.p>
 #endif
-#include <sbuf.p>
+#include <sbuf_p.h>
 #include <sl.p>
 #include <slcompress.p>
 #include <socket_p.h>
