@@ -1,0 +1,12 @@
+void debug_init(char *file, int dbg);
+void dump_packet(void *dat, int n);
+void ttystats(struct ttys *ttyp);
+void allttystats(void);
+void ipstats(void);
+void vjstats(void);
+void tcpstats(void);
+void udpstats(void);
+void icmpstats(void);
+void mbufstats(void);
+void sockstats(void);
+void slirp_exit(int exit_status);

@@ -24,10 +24,7 @@ extern struct termios slirp_tty_settings;
 extern int slirp_tty_restore;
 
 
-void
-debug_init(file, dbg)
-	char *file;
-	int dbg;
+void debug_init(char *file, int dbg)
 {
 	/* Close the old debugging file */
 	if (dfd)
@@ -49,10 +46,7 @@ debug_init(file, dbg)
  * Dump a packet in the same format as tcpdump -x
  */
 #ifdef DEBUG
-void
-dump_packet(dat, n)
-	void *dat;
-	int n;
+void dump_packet(void *dat, int n)
 {
 	u_char *pptr = (u_char *)dat;
 	int j,k;
@@ -77,9 +71,7 @@ dump_packet(dat, n)
  * the link as well.
  */
 
-void
-ttystats(ttyp)
-	struct ttys *ttyp;
+void ttystats(struct ttys *ttyp)
 {
 	struct slirp_ifstats *is = &ttyp->ifstats;
 	char buff[512];
@@ -116,8 +108,7 @@ ttystats(ttyp)
 	lprint("  %6d bad input packets\r\n", is->in_mbad);
 }
 
-void
-allttystats()
+void allttystats(void)
 {
 	struct ttys *ttyp;
 	
@@ -125,8 +116,7 @@ allttystats()
 	   ttystats(ttyp);
 }
 
-void
-ipstats()
+void ipstats(void)
 {
 	lprint(" \r\n");	
 
@@ -149,8 +139,7 @@ ipstats()
 	lprint("  %6d total packets delivered\r\n", ipstat.ips_delivered);
 }
 
-void
-vjstats()
+void vjstats(void)
 {
 	lprint(" \r\n");
 	
@@ -166,8 +155,7 @@ vjstats()
 	lprint("  %6d inbound packets tossed due to error\r\n", comp_s.sls_tossed);
 }
 
-void
-tcpstats()
+void tcpstats(void)
 {
 	lprint(" \r\n");
 
@@ -234,8 +222,7 @@ tcpstats()
 
 }
 
-void
-udpstats()
+void udpstats(void)
 {
         lprint(" \r\n");
 
@@ -248,8 +235,7 @@ udpstats()
 	lprint("  %6d datagrams sent\r\n", udpstat.udps_opackets);
 }
 
-void
-icmpstats()
+void icmpstats(void)
 {
 	lprint(" \r\n");
 	lprint("ICMP stats:\r\n");
@@ -261,8 +247,7 @@ icmpstats()
 	lprint("  %6d ICMP packets sent in reply\r\n", icmpstat.icps_reflect);
 }
 
-void
-mbufstats()
+void mbufstats(void)
 {
 	struct mbuf *m;
 	int i;
@@ -285,8 +270,7 @@ mbufstats()
         lprint("  %6d mbufs queued as packets\r\n\r\n", if_queued);
 }
 
-void
-sockstats()
+void sockstats(void)
 {
 	char buff[256];
 	int n;
@@ -326,9 +310,7 @@ sockstats()
 	}
 }
 
-void
-slirp_exit(exit_status)
-	int exit_status;
+void slirp_exit(int exit_status)
 {
 	struct ttys *ttyp;
 	
