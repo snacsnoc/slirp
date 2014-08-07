@@ -258,7 +258,7 @@ extern int do_echo;
 #include <ip_input_p.h>
 #include <ip_output.p>
 #include <main_p.h>
-#include <mbuf.p>
+#include <mbuf_p.h>
 #include <misc_p.h>
 #include <options_p.h>
 #ifdef USE_PPP
