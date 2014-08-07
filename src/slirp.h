@@ -266,7 +266,7 @@ extern int do_echo;
 #endif
 #include <sbuf_p.h>
 #include <sl_p.h>
-#include <slcompress.p>
+#include <slcompress_p.h>
 #include <socket_p.h>
 #include <tcp_input.p>
 #include <tcp_output.p>

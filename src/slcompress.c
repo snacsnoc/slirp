@@ -52,9 +52,7 @@ struct slcompress comp_s;
 #define MEMCMP(p1, p2, n) memcmp((char *)(p1), (char *)(p2), (int)(n))
 #define MEMCPY(p1, p2, n) memcpy((char *)(p1), (char *)(p2), (int)(n))
 
-void
-sl_compress_init(comp)
-	struct slcompress *comp;
+void sl_compress_init(struct slcompress *comp)
 {
 	register u_int i;
 	register struct cstate *tstate = comp->tstate;
@@ -125,12 +123,7 @@ sl_compress_init(comp)
 	} \
 }
 
-u_int
-sl_compress_tcp(m, ip, comp, compress_cid)
-	struct mbuf *m;
-	register struct ip *ip;
-	struct slcompress *comp;
-	int compress_cid;
+u_int sl_compress_tcp(struct mbuf *m, struct ip *ip, struct slcompress *comp, int compress_cid)
 {
 	register struct cstate *cs = comp->last_cs->cs_next;
 	register u_int hlen = ip->ip_hl;
@@ -382,12 +375,7 @@ uncompressed:
 }
 
 
-int
-sl_uncompress_tcp(bufp, len, type, comp)
-	u_char **bufp;
-	int len;
-	u_int type;
-	struct slcompress *comp;
+int sl_uncompress_tcp(u_char **bufp, int len, u_int type, struct slcompress *comp)
 {
 	register u_char *cp;
 	register u_int hlen, changes;
