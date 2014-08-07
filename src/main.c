@@ -68,6 +68,7 @@ main(argc, argv)
 	lprint_print = (int (*) _P((void *, const char *, va_list)))vfprintf;
 	lprint_ptr2 = (char *)stderr;
 	lprint_arg = (char **)&lprint_ptr2;
+	memset(&ipq, 0, sizeof(ipq));
 	
 	lprint("Slirp v%s (%s)\n\n", SLIRP_VERSION, SLIRP_STATUS);
 	

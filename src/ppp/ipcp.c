@@ -994,9 +994,10 @@ ipcp_up(f)
 	return;
     }
     if (go->ouraddr == 0) {
-	do_syslog(LOG_ERR, "Could not determine local IP address");
-	ipcp_close(f->unit);
-	return;
+	do_syslog(LOG_ERR, "Could not determine local IP address, defaulting to 10.64.64.64");
+        go->ouraddr = 0x4040400a;
+	// ipcp_close(f->unit);
+	// return;
     }
 
     /*

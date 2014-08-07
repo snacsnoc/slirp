@@ -157,6 +157,9 @@ int inet_aton _P((const char *cp, struct in_addr *ia));
 
 /* Avoid conflicting with the libc insque() and remque(), which
    have different prototypes. */
+inline void insque_32 _P((void *, void *));
+inline void remque_32 _P((void *));
+
 #define insque slirp_insque
 #define remque slirp_remque
 
@@ -243,14 +246,6 @@ void if_start _P((struct ttys *));
 void lprint _P((const char *, ...));
 
 extern int do_echo;
-
-#if SIZEOF_CHAR_P == 4
-# define insque_32 insque
-# define remque_32 remque
-#else
- inline void insque_32 _P((void *, void *));
- inline void remque_32 _P((void *));
-#endif
 
 #include <pwd.h>
 #include <netdb.h>

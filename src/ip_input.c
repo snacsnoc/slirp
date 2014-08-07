@@ -64,7 +64,7 @@ struct ip * ip_reass(register struct ipasfrag *ip, register struct ipq *fp);
 void
 ip_init()
 {
-	ipq.next = ipq.prev = (ipqp_32)&ipq;
+	ipq.next = ipq.prev = &ipq;
 	ip_id = tt.tv_sec & 0xffff;
 	udp_init();
 	tcp_init();

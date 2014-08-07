@@ -4,6 +4,7 @@
  */
 
 #define USE_PPP 1
+#define DEBUG 1
 
 /* Undefine if you don't want talk emulation */
 #define EMULATE_TALK 1
