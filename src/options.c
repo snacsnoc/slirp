@@ -819,8 +819,7 @@ int cfg_exec(char *buff, struct socket *inso)
 	return CFG_OK;
 }
 
-int
-cfg_ptyexec(char *buff, struct socket *inso)
+int cfg_ptyexec(char *buff, struct socket *inso)
 {
 	fork_exec(inso, buff, 1);
 	soisfconnected(inso);
