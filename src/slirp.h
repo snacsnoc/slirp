@@ -259,7 +259,7 @@ extern int do_echo;
 #include <ip_output.p>
 #include <main.p>
 #include <mbuf.p>
-#include <misc.p>
+#include <misc_p.h>
 #include <options.p>
 #ifdef USE_PPP
 #include <ppp.p>

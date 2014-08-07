@@ -268,7 +268,7 @@ struct ip * ip_reass(register struct ipasfrag *ip, register struct ipq *fp)
 	  struct mbuf *t;
 	  if ((t = m_get()) == NULL) goto dropfrag;
 	  fp = mtod(t, struct ipq *);
-	  insque_32(fp, &ipq);
+	  slirp_insque(fp, &ipq);
 	  fp->ipq_ttl = IPFRAGTTL;
 	  fp->ipq_p = ip->ip_p;
 	  fp->ipq_id = ip->ip_id;
@@ -379,7 +379,7 @@ insert:
 	ip->ipf_mff &= ~1;
 	((struct ip *)ip)->ip_src = fp->ipq_src;
 	((struct ip *)ip)->ip_dst = fp->ipq_dst;
-	remque_32(fp);
+	slirp_remque(fp);
 	(void) m_free(dtom(fp));
 	m = dtom(ip);
 	m->m_len += (ip->ip_hl << 2);
@@ -407,7 +407,7 @@ void ip_freef(struct ipq *fp)
 		ip_deq(q);
 		m_freem(dtom(q));
 	}
-	remque_32(fp);
+	slirp_remque(fp);
 	(void) m_free(dtom(fp));
 }
 

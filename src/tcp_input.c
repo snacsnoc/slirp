@@ -190,14 +190,14 @@ tcp_reass(tp, ti, m)
 		}
 		q = (struct tcpiphdr *)q->ti_next;
 		m = (struct mbuf *) REASS_MBUF((struct tcpiphdr *)q->ti_prev);
-		remque_32((void *)(q->ti_prev));
+		slirp_remque((void *)(q->ti_prev));
 		m_freem(m);
 	}
 
 	/*
 	 * Stick new segment in its place.
 	 */
-	insque_32(ti, (void *)(q->ti_prev));
+	slirp_insque(ti, (void *)(q->ti_prev));
 
 present:
 	/*
@@ -214,7 +214,7 @@ present:
 	do {
 		tp->rcv_nxt += ti->ti_len;
 		flags = ti->ti_flags & TH_FIN;
-		remque_32(ti);
+		slirp_remque(ti);
 		m = (struct mbuf *) REASS_MBUF(ti); /* XXX */
 		ti = (struct tcpiphdr *)ti->ti_next;
 /*		if (so->so_state & SS_FCANTRCVMORE) */

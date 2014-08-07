@@ -15,8 +15,7 @@ int x_port = -1;
 int x_display = 0;
 int x_screen = 0;
 
-int
-show_x(char *buff, struct socket *inso)
+int show_x(char *buff, struct socket *inso)
 {
 	if (x_port < 0) {
 		lprint("X Redir: X not being redirected.\r\n");
@@ -36,12 +35,7 @@ show_x(char *buff, struct socket *inso)
 /*
  * XXX Allow more than one X redirection?
  */
-void
-redir_x(inaddr, start_port, display, screen)
-	u_int32_t inaddr;
-	int start_port;
-	int display;
-	int screen;
+void redir_x(u_int32_t inaddr, int start_port, int display, int screen)
 {
 	int i;
 	
@@ -80,8 +74,7 @@ inet_aton(cp, ia)
 /*
  * Get our IP address and put it in our_addr
  */
-void
-getouraddr()
+void getouraddr(void)
 {
 	char buff[256];
 	struct hostent *he;
@@ -95,52 +88,23 @@ getouraddr()
 	our_addr = *(struct in_addr *)he->h_addr;
 }
 
-// #if SIZEOF_CHAR_P == 8
-
-struct quehead_32 {
-	struct quehead *qh_link;
-	struct quehead *qh_rlink;
-};
-
-void
-insque_32(void *a, void *b)
-{
-	register struct quehead_32 *element = (struct quehead_32 *) a;
-	register struct quehead_32 *head = (struct quehead_32 *) b;
-	element->qh_link = head->qh_link;
-	head->qh_link = element;
-	element->qh_rlink = head;
-	((struct quehead_32 *)(element->qh_link))->qh_rlink
-	= element;
-}
-
-void remque_32(void *a)
-{
-	register struct quehead_32 *element = (struct quehead_32 *) a;
-	((struct quehead_32 *)(element->qh_link))->qh_rlink = element->qh_rlink;
-	((struct quehead_32 *)(element->qh_rlink))->qh_link = element->qh_link;
-	element->qh_rlink = 0;
-}
-
-// #endif /* SIZEOF_CHAR_P == 8 */
-
 struct quehead {
 	struct quehead *qh_link;
 	struct quehead *qh_rlink;
 };
 
-void insque(void *a, void *b)
+void slirp_insque(void *a, void *b)
 {
-	register struct quehead *element = (struct quehead *) a;
-	register struct quehead *head = (struct quehead *) b;
+	struct quehead *element = (struct quehead *) a;
+	struct quehead *head = (struct quehead *) b;
+
 	element->qh_link = head->qh_link;
 	head->qh_link = (struct quehead *)element;
 	element->qh_rlink = (struct quehead *)head;
-	((struct quehead *)(element->qh_link))->qh_rlink
-	= (struct quehead *)element;
+	((struct quehead *)(element->qh_link))->qh_rlink = (struct quehead *)element;
 }
 
-void remque(void *a)
+void slirp_remque(void *a)
 {
   register struct quehead *element = (struct quehead *) a;
   ((struct quehead *)(element->qh_link))->qh_rlink = element->qh_rlink;
@@ -152,8 +116,7 @@ void remque(void *a)
 /* #endif */
 
 
-int
-add_exec(struct ex_list **ex_ptr, int do_pty, char *exec, int addr, int port)
+int add_exec(struct ex_list **ex_ptr, int do_pty, char *exec, int addr, int port)
 {
 	struct ex_list *tmp_ptr;
 	
@@ -195,8 +158,7 @@ strerror(error)
 #endif
 
 
-int
-openpty(int *amaster, int *aslave)
+int openpty(int *amaster, int *aslave)
 {
 	register int master, slave;
 
@@ -270,12 +232,11 @@ openpty(int *amaster, int *aslave)
  * do_pty = 1   Fork/exec using slirp.telnetd
  * do_ptr = 2   Fork/exec using pty
  */
-int
-fork_exec(struct socket *so, char *ex, int do_pty)
+int fork_exec(struct socket *so, char *ex, int do_pty)
 {
 	int s;
 	struct sockaddr_in addr;
-	int addrlen = sizeof(addr);
+	socklen_t addrlen = sizeof(addr);
 	int opt;
         int master;
 	char *argv[256];
@@ -431,9 +392,7 @@ strdup(str)
 }
 #endif
 
-void
-snooze_hup(num)
-	int num;
+void snooze_hup(int num)
 {
 	int s, ret;
 #ifndef NO_UNIX_SOCKETS
@@ -473,8 +432,7 @@ snooze_hup(num)
 }
 	
 	
-void
-snooze()
+void snooze(void)
 {
 	sigset_t s;
 	int i;
@@ -498,9 +456,7 @@ snooze()
 	exit(255);
 }
 
-void
-relay(s)
-	int s;
+void relay(int s)
 {
 	char buf[8192];
 	int n;
@@ -750,9 +706,7 @@ sprintf_len(va_alist) va_dcl
 
 #endif
 
-void
-u_sleep(usec)
-	int usec;
+void u_sleep(int usec)
 {
 	struct timeval t;
 	fd_set fdset;
@@ -769,9 +723,7 @@ u_sleep(usec)
  * Set fd blocking and non-blocking
  */
 
-void
-fd_nonblock(fd)
-	int fd;
+void fd_nonblock(int fd)
 {
 #ifdef FIONBIO
 	int opt = 1;
@@ -786,10 +738,9 @@ fd_nonblock(fd)
 #endif
 }
 
-void
-fd_block(fd)
-	int fd;
+void fd_block(int fd)
 {
+
 #ifdef FIONBIO
 	int opt = 0;
 	
@@ -807,8 +758,7 @@ fd_block(fd)
 /*
  * invoke RSH
  */
-int
-rsh_exec(struct socket *so, struct socket *ns, char *user, char *host, char *args)
+int rsh_exec(struct socket *so, struct socket *ns, char *user, char *host, char *args)
 {
 	int fd[2];
 	int fd0[2];

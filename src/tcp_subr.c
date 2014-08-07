@@ -274,7 +274,7 @@ struct tcpcb *tcp_close(struct tcpcb *tp)
 	while (t != (struct tcpiphdr *)tp) {
 		t = (struct tcpiphdr *)t->ti_next;
 		m = (struct mbuf *) REASS_MBUF((struct tcpiphdr *)t->ti_prev);
-		remque_32((struct tcpiphdr *) t->ti_prev);
+		slirp_remque((struct tcpiphdr *) t->ti_prev);
 		m_freem(m);
 	}
 	/* It's static */
