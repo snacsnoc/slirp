@@ -34,8 +34,7 @@ void ifs_remque(struct mbuf *ifm)
 	ifm->ifs_next->ifs_prev = ifm->ifs_prev;
 }
 
-void
-if_init()
+void if_init(void)
 {
 	/*
 	 * Set if_maxlinkhdr to 48 because it's 40 bytes for TCP/IP,
