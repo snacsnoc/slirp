@@ -32,10 +32,8 @@ INCS = ${srcdir}/udp_p.h ${srcdir}/tcp_timer_p.h ${srcdir}/tcp_subr_p.h ${srcdir
 	${srcdir}/ppp_p.h ${srcdir}/sl_p.h\
 	${srcdir}/slcompress_p.h\
 	${srcdir}/ip_output_p.h\
-	${srcdir}/tcp_input_p.h
-
-PROTO = \
-	${srcdir}/tcp_output.p
+	${srcdir}/tcp_input_p.h\
+	${srcdir}/tcp_output_p.h
 
 LIBS = 
 
@@ -49,7 +47,7 @@ MANEXT = 1
 
 all: ${srcdir}/configure Makefile config.h slirp
 
-slirp: $(PROTO) $(INCS) $(OBJ)
+slirp: $(INCS) $(OBJ)
 	$(CC)  -o slirp $(OBJ) $(LIBS)
 
 install: slirp install.man
