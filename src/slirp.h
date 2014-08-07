@@ -157,8 +157,8 @@ int inet_aton _P((const char *cp, struct in_addr *ia));
 
 /* Avoid conflicting with the libc insque() and remque(), which
    have different prototypes. */
-inline void insque_32 _P((void *, void *));
-inline void remque_32 _P((void *));
+void insque_32 _P((void *, void *));
+void remque_32 _P((void *));
 
 #define insque slirp_insque
 #define remque slirp_remque
@@ -270,7 +270,7 @@ extern int do_echo;
 #include <socket.p>
 #include <tcp_input.p>
 #include <tcp_output.p>
-#include <tcp_subr.p>
+#include <tcp_subr_p.h>
 #include <tcp_timer_p.h>
 #include <terminal.p>
 #include <ttys.p>
