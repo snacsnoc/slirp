@@ -14,9 +14,7 @@
 
 #include <slirp.h>
 
-void
-term_raw(ttyp)
-	struct ttys *ttyp;
+void term_raw(struct ttys *ttyp)
 {
 	struct termios tempio;
 	
@@ -50,9 +48,7 @@ term_raw(ttyp)
 }
 
 
-void 
-term_restore(ttyp)
-	struct ttys *ttyp;
+void term_restore(struct ttys *ttyp)
 {
 	if (!isatty(ttyp->fd))
 	    return;
