@@ -31,10 +31,10 @@ INCS = ${srcdir}/udp_p.h ${srcdir}/tcp_timer_p.h ${srcdir}/tcp_subr_p.h ${srcdir
 	${srcdir}/sbuf_p.h ${srcdir}/ttys_p.h\
 	${srcdir}/ppp_p.h ${srcdir}/sl_p.h\
 	${srcdir}/slcompress_p.h\
-	${srcdir}/ip_output_p.h
+	${srcdir}/ip_output_p.h\
+	${srcdir}/tcp_input_p.h
 
 PROTO = \
-	${srcdir}/tcp_input.p\
 	${srcdir}/tcp_output.p
 
 LIBS = 

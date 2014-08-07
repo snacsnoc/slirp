@@ -116,11 +116,7 @@ tcp_seq tcp_iss;                /* tcp initial send seq # */
 }
 #endif
 
-int
-tcp_reass(tp, ti, m)
-	register struct tcpcb *tp;
-	register struct tcpiphdr *ti;
-	struct mbuf *m;
+int tcp_reass(struct tcpcb *tp, struct tcpiphdr *ti, struct mbuf *m)
 {
 	register struct tcpiphdr *q;
 	struct socket *so = tp->t_socket;
@@ -235,11 +231,7 @@ present:
  * TCP input routine, follows pages 65-76 of the
  * protocol specification dated September, 1981 very closely.
  */
-void
-tcp_input(m, iphlen, inso)
-	register struct mbuf *m;
-	int iphlen;
-	struct socket *inso;
+void tcp_input(struct mbuf *m, int iphlen, struct socket *inso)
 {
   	struct ip save_ip, *ip;
 	register struct tcpiphdr *ti;
@@ -1508,12 +1500,7 @@ drop:
 /*	int *ts_present;
  *	u_int32_t *ts_val, *ts_ecr;
  */
-void
-tcp_dooptions(tp, cp, cnt, ti)
-	struct tcpcb *tp;
-	u_char *cp;
-	int cnt;
-	struct tcpiphdr *ti;
+void tcp_dooptions(struct tcpcb *tp, u_char *cp, int cnt, struct tcpiphdr *ti)
 {
 	u_int16_t mss;
 	int opt, optlen;
@@ -1589,11 +1576,7 @@ tcp_dooptions(tp, cp, cnt, ti)
 
 #ifdef notdef
 
-void
-tcp_pulloutofband(so, ti, m)
-	struct socket *so;
-	struct tcpiphdr *ti;
-	register struct mbuf *m;
+void tcp_pulloutofband(struct socket *so, struct tcpiphdr *ti, struct mbuf *m)
 {
 	int cnt = ti->ti_urp - 1;
 	
@@ -1623,10 +1606,7 @@ tcp_pulloutofband(so, ti, m)
  * and update averages and current timeout.
  */
 
-void
-tcp_xmit_timer(tp, rtt)
-	register struct tcpcb *tp;
-	int rtt;
+void tcp_xmit_timer(struct tcpcb *tp, int rtt)
 {
 	register short delta;
 
@@ -1713,10 +1693,7 @@ tcp_xmit_timer(tp, rtt)
  * parameters from pre-set or cached values in the routing entry.
  */
 
-int
-tcp_mss(tp, offer)
-        register struct tcpcb *tp;
-        u_int offer;
+int tcp_mss(struct tcpcb *tp, u_int offer)
 {
 	struct socket *so = tp->t_socket;
 	int mss;
