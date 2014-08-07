@@ -34,7 +34,6 @@ INCS = ${srcdir}/udp_p.h ${srcdir}/tcp_timer_p.h ${srcdir}/tcp_subr_p.h ${srcdir
 	${srcdir}/ip_output_p.h
 
 PROTO = \
-	${srcdir}/ip_output.p \
 	${srcdir}/tcp_input.p\
 	${srcdir}/tcp_output.p
 
