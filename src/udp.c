@@ -61,7 +61,7 @@ int	udpcksum = 0;		/* XXX */
 
 struct	socket *udp_last_so = &udb;
 
-void udp_init()
+void udp_init(void)
 {
 	udb.so_next = udb.so_prev = &udb;
 }
@@ -354,7 +354,7 @@ u_int8_t udp_tos(struct socket *so)
 void udp_emu(struct socket *so, struct mbuf *m)
 {
 	struct sockaddr_in addr;
-        int addrlen = sizeof(addr);
+        socklen_t addrlen = sizeof(addr);
 #ifdef EMULATE_TALK
 	CTL_MSG_OLD *omsg;
 	CTL_MSG *nmsg;
