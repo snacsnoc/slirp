@@ -61,8 +61,7 @@ struct ip * ip_reass(register struct ipasfrag *ip, register struct ipq *fp);
  * IP initialization: fill in IP protocol switch table.
  * All protocols not implemented in kernel go to raw IP protocol handler.
  */
-void
-ip_init()
+void ip_init(void)
 {
 	ipq.next = ipq.prev = &ipq;
 	ip_id = tt.tv_sec & 0xffff;
@@ -439,8 +438,7 @@ void ip_deq(struct ipasfrag *p)
  * if a timer expires on a reassembly
  * queue, discard it.
  */
-void
-ip_slowtimo()
+void ip_slowtimo(void)
 {
 	struct ipq *fp;
 	

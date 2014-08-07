@@ -255,7 +255,7 @@ extern int do_echo;
 #include <cksum.p>
 #include <debug.p>
 #include <if.p>
-#include <ip_input.p>
+#include <ip_input_p.h>
 #include <ip_output.p>
 #include <main_p.h>
 #include <mbuf.p>
