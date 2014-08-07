@@ -11,11 +11,7 @@
  * NOTE: FRAME_END means in_pkt = 0. Any other byte while in_pkt = 0
  * means we're getting a packet now.
  */
-void
-sl_input(ttyp, if_bptr, if_n)
-	struct ttys *ttyp;
-	u_char *if_bptr;
-	int if_n;
+void sl_input(struct ttys *ttyp, u_char *if_bptr, int if_n)
 {
 	DEBUG_CALL("sl_input");
 	DEBUG_ARG("ttyp = %lx", (long)ttyp);
@@ -86,9 +82,7 @@ sl_input(ttyp, if_bptr, if_n)
 	}
 }
 
-void
-sl_dispatch(ttyp)
-	struct ttys *ttyp;
+void sl_dispatch(struct ttys *ttyp)
 {
 	u_char c;
 	struct mbuf *m = ttyp->m;
@@ -134,13 +128,7 @@ sl_dispatch(ttyp)
  * Copy data from m to inbptr, applying SLIP encapsulation
  * Returns number of bytes in inbptr
  */
-int
-sl_encap(inbptr, m, unit, sl_esc, proto)
-	char *inbptr;
-	struct mbuf *m;
-	int unit;
-	int sl_esc;
-	int proto;
+int sl_encap(char *inbptr, struct mbuf *m, int unit, int sl_esc, int proto)
 {
 	u_char *mptr;
 	int mlen;
