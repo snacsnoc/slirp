@@ -15,10 +15,7 @@ struct ttys *ttys_unit[MAX_INTERFACES];
 
 int slirp_forked;
 
-struct ttys *
-tty_attach(unit, device)
-	int unit;
-	char *device;
+struct ttys *tty_attach(int unit, char *device)
 {
 	char buff[256], *bptr;
 	struct ttys *ttyp, *ttyp_tmp, *ttyp_last = 0;
@@ -100,10 +97,7 @@ tty_attach(unit, device)
 	return ttyp;
 }
 
-void
-tty_detached(ttyp, exiting)
-	struct ttys *ttyp;
-	int exiting;
+void tty_detached(struct ttys *ttyp, int exiting)
 {
 	struct ttys *ttyp_tmp, *ttyp_last = 0;
 	
@@ -189,8 +183,7 @@ tty_detached(ttyp, exiting)
 /*
  * Called when controlling tty has detached
  */
-void
-ctty_detached()
+void ctty_detached(void)
 {
 	int retval;
 	

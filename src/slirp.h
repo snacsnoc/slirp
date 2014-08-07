@@ -273,7 +273,7 @@ extern int do_echo;
 #include <tcp_subr_p.h>
 #include <tcp_timer_p.h>
 #include <terminal_p.h>
-#include <ttys.p>
+#include <ttys_p.h>
 #include <udp_p.h>
 #include <ip_icmp_p.h>
 
