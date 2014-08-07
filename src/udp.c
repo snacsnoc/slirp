@@ -61,8 +61,7 @@ int	udpcksum = 0;		/* XXX */
 
 struct	socket *udp_last_so = &udb;
 
-void
-udp_init()
+void udp_init()
 {
 	udb.so_next = udb.so_prev = &udb;
 }
@@ -70,10 +69,7 @@ udp_init()
  * m->m_len   length ip packet 
  * ip->ip_len length data (IPDU)
  */
-void
-udp_input(m, iphlen)
-	register struct mbuf *m;
-	int iphlen;
+void udp_input(struct mbuf *m, int iphlen)
 {
 	register struct ip *ip;
 	register struct udphdr *uh;
@@ -234,11 +230,7 @@ bad:
 	return;
 }
 
-int
-udp_output(so, m, addr)
-	struct socket *so;
-	struct mbuf *m;
-	struct sockaddr_in *addr;
+int udp_output(struct socket *so, struct mbuf *m, struct sockaddr_in *addr)
 {
 	register struct udpiphdr *ui;
 	int error = 0;
@@ -293,9 +285,7 @@ udp_output(so, m, addr)
 	return (error);
 }
 
-int
-udp_attach(so)
-     struct socket *so;
+int udp_attach(struct socket *so)
 {
   struct sockaddr_in addr;
 	
@@ -322,9 +312,7 @@ udp_attach(so)
   return(so->s);
 }
 
-void
-udp_detach(so)
-	struct socket *so;
+void udp_detach(struct socket *so)
 {
 	close(so->s);
 	/* if (so->so_m) m_free(so->so_m);    done by sofree */
@@ -340,9 +328,7 @@ struct tos_t udptos[] = {
 	{0, 0, 0, 0}
 };
 
-u_int8_t
-udp_tos(so)
-	struct socket *so;
+u_int8_t udp_tos(struct socket *so)
 {
 	int i = 0;
 	
@@ -365,10 +351,7 @@ udp_tos(so)
 /*
  * Here, talk/ytalk/ntalk requests must be emulated
  */
-void
-udp_emu(so, m)
-	struct socket *so;
-	struct mbuf *m;
+void udp_emu(struct socket *so, struct mbuf *m)
 {
 	struct sockaddr_in addr;
         int addrlen = sizeof(addr);
@@ -587,16 +570,12 @@ struct cu_header {
 	}
 }
 
-struct socket *
-udp_listen(port, laddr, lport, flags)
-	u_int port;
-	u_int32_t laddr;
-	u_int lport;
-	int flags;
+struct socket * udp_listen(u_int port, u_int32_t laddr, u_int lport, int flags)
 {
 	struct sockaddr_in addr;
 	struct socket *so;
-	int addrlen = sizeof(struct sockaddr_in), opt = 1;
+	socklen_t addrlen = sizeof(struct sockaddr_in);
+	int opt = 1;
 	
 	if ((so = socreate()) == NULL) {
 		free(so);

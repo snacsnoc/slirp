@@ -23,12 +23,14 @@ OBJ = $(PPPOBJ) cksum.o debug.o if.o ip_icmp.o ip_input.o ip_output.o main.o mbu
 	misc.o options.o sbuf.o sl.o slcompress.o socket.o tcp_input.o\
 	tcp_output.o tcp_subr.o tcp_timer.o terminal.o ttys.o udp.o 
 
+INCS = ${srcdir}/udp_p.h
+
 PROTO = ${srcdir}/cksum.p ${srcdir}/debug.p ${srcdir}/if.p ${srcdir}/ip_icmp.p\
 	${srcdir}/ip_input.p ${srcdir}/ip_output.p ${srcdir}/main.p ${srcdir}/mbuf.p\
         ${srcdir}/misc.p ${srcdir}/options.p ${srcdir}/ppp.p ${srcdir}/sbuf.p\
 	${srcdir}/sl.p ${srcdir}/slcompress.p ${srcdir}/socket.p ${srcdir}/tcp_input.p\
 	${srcdir}/tcp_output.p ${srcdir}/tcp_subr.p ${srcdir}/tcp_timer.p\
-	${srcdir}/terminal.p ${srcdir}/ttys.p ${srcdir}/udp.p
+	${srcdir}/terminal.p ${srcdir}/ttys.p
 
 LIBS = 
 
@@ -42,7 +44,7 @@ MANEXT = 1
 
 all: ${srcdir}/configure Makefile config.h slirp
 
-slirp: $(PROTO) $(OBJ)
+slirp: $(PROTO) $(INCS) $(OBJ)
 	$(CC)  -o slirp $(OBJ) $(LIBS)
 
 install: slirp install.man

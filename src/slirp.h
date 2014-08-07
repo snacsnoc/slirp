@@ -274,7 +274,7 @@ extern int do_echo;
 #include <tcp_timer.p>
 #include <terminal.p>
 #include <ttys.p>
-#include <udp.p>
+#include <udp_p.h>
 #include <ip_icmp.p>
 
 #ifdef USE_PPP
