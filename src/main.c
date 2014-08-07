@@ -60,10 +60,7 @@ char *path_chap;
 
 FILE *lfd;
 
-int
-main(argc, argv)
-	int argc;
-	char **argv;
+int main(int argc, char **argv)
 {
 	lprint_print = (int (*) _P((void *, const char *, va_list)))vfprintf;
 	lprint_ptr2 = (char *)stderr;
@@ -84,8 +81,7 @@ main(argc, argv)
 	return 0;
 }
 
-void
-tty_init (void)
+void tty_init(void)
 {
      char* env_tty;
      size_t env_tty_len;
@@ -111,10 +107,7 @@ tty_init (void)
      } 
 }
 
-void
-main_init(argc, argv)
-     int argc;
-     char **argv;
+void main_init(int argc, char **argv)
 {
   int i;
   char buff[512];
@@ -183,7 +176,7 @@ main_init(argc, argv)
     struct sockaddr_un sock_un;
 #endif
     struct sockaddr_in sock_in;
-    int s = -1, unit, port = 0, ret;
+    int s = -1, unit = 0, port = 0, ret;
     int want_link = 0;
     char pwd[256], hn[256];
     struct hostent *hp;
@@ -552,8 +545,7 @@ main_init(argc, argv)
 
 fd_set writefds, readfds, xfds;
 
-void
-main_loop()
+void main_loop(void)
 {
 	struct socket *so, *so_next;
 	struct timeval timeout;
@@ -862,10 +854,10 @@ cont_1:
 		char *device = dev;
 #ifndef NO_UNIX_SOCKETS
 		struct sockaddr_un sock_un;
-		int sock_len = sizeof(struct sockaddr_un);
+		socklen_t sock_len = sizeof(struct sockaddr_un);
 #endif
 		struct sockaddr_in sock_in;
-		int sock_len2 = sizeof(struct sockaddr_in);
+		socklen_t sock_len2 = sizeof(struct sockaddr_in);
 		
 		fd = -1;
 		if (slirp_socket_passwd)
@@ -1167,9 +1159,7 @@ failed:
 } /* while(1) { */
 }
 
-void
-do_wait(n)
-	int n;
+void do_wait(int n)
 {
 	int stat;
 #ifndef WNOHANG
@@ -1184,8 +1174,7 @@ do_wait(n)
 /*
  * curtime kept to an accuracy of 1ms
  */
-void
-updtime()
+void updtime(void)
 {
 #ifndef FULL_BOLT
 	u_int inc;
@@ -1236,9 +1225,7 @@ updtime()
 #endif
 }
 
-void
-slirp_hup(num)
-	int num;
+void slirp_hup(int num)
 {
 	ctty_closed = 1;
 	signal(SIGHUP, SIG_IGN); /* XXX */

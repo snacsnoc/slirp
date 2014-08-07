@@ -257,7 +257,7 @@ extern int do_echo;
 #include <if.p>
 #include <ip_input.p>
 #include <ip_output.p>
-#include <main.p>
+#include <main_p.h>
 #include <mbuf.p>
 #include <misc_p.h>
 #include <options_p.h>
