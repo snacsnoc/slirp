@@ -146,9 +146,7 @@ ccp_close(unit)
 /*
  * ccp_lowerup - we may now transmit CCP packets.
  */
-void
-ccp_lowerup(unit)
-    int unit;
+void ccp_lowerup(int unit)
 {
     fsm_lowerup(&ccp_fsm[unit]);
 }

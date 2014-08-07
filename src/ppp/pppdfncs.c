@@ -105,7 +105,6 @@ void reap_kids __P((void));
 void cleanup __P((int, caddr_t));
 void close_fd __P((void));
 void die __P((int));
-void novm __P((char *));
 
 void log_packet __P((u_char *, int, char *));
 void format_packet __P((u_char *, int,
@@ -361,9 +360,7 @@ alrm(sig)
 /*
  * novm - log an error message saying we ran out of memory, and die.
  */
-void
-novm(msg)
-    char *msg;
+void novm(char *msg)
 {
     do_syslog(LOG_ERR, "Virtual memory exhausted allocating %s\n", msg);
     die(1);

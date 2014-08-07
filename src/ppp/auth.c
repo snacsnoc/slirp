@@ -126,9 +126,7 @@ static void free_wordlist __P((struct wordlist *));
  * An Open on LCP has requested a change from Dead to Establish phase.
  * Do what's necessary to bring the physical layer up.
  */
-void
-link_required(unit)
-    int unit;
+void link_required(int unit)
 {
 }
 
@@ -136,9 +134,7 @@ link_required(unit)
  * LCP has terminated the link; go to the Dead phase and take the
  * physical layer down.
  */
-void
-link_terminated(unit)
-    int unit;
+void link_terminated(int unit)
 {
     if (phase == PHASE_DEAD)
 	return;
@@ -153,9 +149,7 @@ link_terminated(unit)
 /*
  * LCP has gone down; it will either die or try to re-establish.
  */
-void
-link_down(unit)
-    int unit;
+void link_down(int unit)
 {
     ipcp_close(0);
     ccp_close(0);
@@ -166,9 +160,7 @@ link_down(unit)
  * The link is established.
  * Proceed to the Dead, Authenticate or Network phase as appropriate.
  */
-void
-link_established(unit)
-    int unit;
+void link_established(int unit)
 {
     int auth;
     lcp_options *wo = &lcp_wantoptions[unit];
@@ -226,9 +218,7 @@ network_phase(unit)
 /*
  * The peer has failed to authenticate himself using `protocol'.
  */
-void
-auth_peer_fail(unit, protocol)
-    int unit, protocol;
+void auth_peer_fail(int unit, int protocol)
 {
     /*
      * Authentication failure: take the link down
@@ -240,9 +230,7 @@ auth_peer_fail(unit, protocol)
 /*
  * The peer has been successfully authenticated using `protocol'.
  */
-void
-auth_peer_success(unit, protocol)
-    int unit, protocol;
+void auth_peer_success(int unit, int protocol)
 {
     int bit;
 
@@ -273,9 +261,7 @@ auth_peer_success(unit, protocol)
 /*
  * We have failed to authenticate ourselves to the peer using `protocol'.
  */
-void
-auth_withpeer_fail(unit, protocol)
-    int unit, protocol;
+void auth_withpeer_fail(int unit, int protocol)
 {
     /*
      * We've failed to authenticate ourselves to our peer.
@@ -287,9 +273,7 @@ auth_withpeer_fail(unit, protocol)
 /*
  * We have successfully authenticated ourselves with the peer using `protocol'.
  */
-void
-auth_withpeer_success(unit, protocol)
-    int unit, protocol;
+void auth_withpeer_success(int unit, int protocol)
 {
     int bit;
 
@@ -735,10 +719,7 @@ get_secret(unit, client, server, secret, secret_len, save_addrs)
  * auth_ip_addr - check whether the peer is authorized to use
  * a given IP address.  Returns 1 if authorized, 0 otherwise.
  */
-int
-auth_ip_addr(unit, addr)
-    int unit;
-    u_int32_t addr;
+int auth_ip_addr(int unit, u_int32_t addr)
 {
     u_int32_t a;
     struct hostent *hp;
@@ -774,9 +755,7 @@ auth_ip_addr(unit, addr)
  * to use, such as an address in the loopback net or a multicast address.
  * addr is in network byte order.
  */
-int
-bad_ip_adrs(addr)
-    u_int32_t addr;
+int bad_ip_adrs(u_int32_t addr)
 {
     addr = ntohl(addr);
     return (addr >> IN_CLASSA_NSHIFT) == IN_LOOPBACKNET
