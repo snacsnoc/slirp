@@ -252,7 +252,7 @@ extern int do_echo;
 
 #define DEFAULT_BAUD 115200
 
-#include <cksum.p>
+#include <cksum_p.h>
 #include <debug_p.h>
 #include <if_p.h>
 #include <ip_input_p.h>

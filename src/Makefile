@@ -26,9 +26,9 @@ OBJ = $(PPPOBJ) cksum.o debug.o if.o ip_icmp.o ip_input.o ip_output.o main.o mbu
 INCS = ${srcdir}/udp_p.h ${srcdir}/tcp_timer_p.h ${srcdir}/tcp_subr_p.h ${srcdir}/socket_p.h\
 	${srcdir}/misc_p.h ${srcdir}/options_p.h ${srcdir}/main_p.h\
 	${srcdir}/ip_input_p.h ${srcdir}/ip_icmp_p.h ${srcdir}/if_p.h\
-	${srcdir}/debug_p.h
+	${srcdir}/debug_p.h ${srcdir}/cksum_p.h
 
-PROTO = ${srcdir}/cksum.p\
+PROTO = \
 	${srcdir}/ip_output.p ${srcdir}/mbuf.p\
         ${srcdir}/ppp.p ${srcdir}/sbuf.p\
 	${srcdir}/sl.p ${srcdir}/slcompress.p ${srcdir}/tcp_input.p\
