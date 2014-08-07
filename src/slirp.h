@@ -271,7 +271,7 @@ extern int do_echo;
 #include <tcp_input.p>
 #include <tcp_output.p>
 #include <tcp_subr.p>
-#include <tcp_timer.p>
+#include <tcp_timer_p.h>
 #include <terminal.p>
 #include <ttys.p>
 #include <udp_p.h>
