@@ -262,7 +262,7 @@ extern int do_echo;
 #include <misc_p.h>
 #include <options_p.h>
 #ifdef USE_PPP
-#include <ppp.p>
+#include <ppp_p.h>
 #endif
 #include <sbuf_p.h>
 #include <sl.p>

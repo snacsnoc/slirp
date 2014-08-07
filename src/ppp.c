@@ -134,11 +134,7 @@ int ppp_exit;			/* Exit when PPP goes down */
  * stuff character in the output buffer, escaped if mentioned 
  * in xmit_async_map, and update the check sum				
  */
-void
-stuff_char(c, unit, outp)
-	int c;
-	int unit;
-	struct ppp_out *outp;
+void stuff_char(int c, int unit, struct ppp_out *outp)
 {
 	c &= 0xff;
        	if  (in_xmap(c, unit)){
@@ -152,10 +148,7 @@ stuff_char(c, unit, outp)
 /*
  * Add a two byte check sum to the end of the outgoing packet
  */
-void
-add_fcs(outp, unit)
-	struct ppp_out *outp;
-	int unit;
+void add_fcs(struct ppp_out *outp, int unit)
 {
        u_short s = outp->fcs;
     
@@ -167,10 +160,7 @@ add_fcs(outp, unit)
 /*
  * check the check sum of an incoming frame
  */
-int
-check_fcs(buff, len)
-	u_char *buff;
-	int len;
+int check_fcs(u_char *buff, int len)
 {
         u_short fcs = PPP_FCS_INIT;
         u_char *c = buff;
@@ -192,9 +182,7 @@ check_fcs(buff, len)
  * IPCP tells us that the link is broken, we're not allowed 
  * pass IP packets
  */
-int
-sifdown(unit)
-	int unit;
+int sifdown(int unit)
 {
 	struct ttys *ttyp = ttys_unit[unit];
 	
@@ -209,9 +197,7 @@ sifdown(unit)
 /*
  * IPCP says link is open, we can pass IP packets
  */
-int
-sifup (unit)
-	int unit;
+int sifup(int unit)
 {
 	struct ttys *ttyp = ttys_unit[unit];
 	
@@ -229,11 +215,7 @@ sifup (unit)
  * we don't really care about pcomp and accomp, because compression
  * can be directly detected from the incoming packet
  */
-void
-ppp_recv_config (unit, mru, asyncmap, pcomp, accomp)
-	int unit, mru;
-	u_int32_t asyncmap;
-	int pcomp, accomp;
+void ppp_recv_config (int unit, int mru, u_int32_t asyncmap, int pcomp, int accomp)
 {
 	recv_async_map[unit] = asyncmap;
 	do_syslog(0, "ppp_recv_config: (recv) asyncmap set to %08lx", asyncmap);
@@ -245,10 +227,7 @@ ppp_recv_config (unit, mru, asyncmap, pcomp, accomp)
  * be escaped when transmitted
  */
 
-void
-ppp_set_xaccm(unit, accm)
-	int unit;
-	u_int32_t *accm;
+void ppp_set_xaccm(int unit, u_int32_t *accm)
 {
 	memcpy(xmit_async_map[unit], accm, sizeof(accm[0]) * 8);
 	do_syslog(0, "ppp_set_xaccm: extended xmit asyncmap set to %08lx%08lx%08lx%08lx%08lx%08lx%08lx%08lx",
@@ -258,11 +237,7 @@ ppp_set_xaccm(unit, accm)
 /*
  * configure our receive characteristic after negotiations
  */
-void
-ppp_send_config (unit, mtu, asyncmap, pcomp, accomp)
-	int unit, mtu;
-	u_int32_t asyncmap;
-	int pcomp, accomp;
+void ppp_send_config (int unit, int mtu, u_int32_t asyncmap, int pcomp, int accomp)
 {
 	if_mtu = MIN(mtu, if_mtu);
 	do_syslog(0, "ppp_send_config: mtu set to %d", if_mtu);
@@ -283,9 +258,7 @@ ppp_send_config (unit, mtu, asyncmap, pcomp, accomp)
  * I don't know what to do with cidcomp and maxcid
  * must fix later
  */
-void
-sifvjcomp (unit, vjcomp, cidcomp, maxcid)
-	int unit, vjcomp, cidcomp, maxcid;
+void sifvjcomp (int unit, int vjcomp, int cidcomp, int maxcid)
 {
 	if (vjcomp) {
 		if_comp &= ~(IF_AUTOCOMP|IF_NOCOMPRESS);
@@ -310,9 +283,7 @@ sifvjcomp (unit, vjcomp, cidcomp, maxcid)
  * the it to a mbuf and deliver to slirps ip_input function
  */
 
-void
-doframe(ttyp)
-	struct ttys *ttyp;
+void doframe(struct ttys *ttyp)
 {
 	u_short proto;
 	int i, unit = ttyp->unit;
@@ -478,11 +449,7 @@ free_it:
  * possible to write the unescaped data directly to a mbuf,
  * and therefore this is a bit different
  */
-void
-ppp_input(ttyp, if_bptr, if_n)
-	struct ttys *ttyp;
-	u_char *if_bptr;
-	int if_n;
+void ppp_input(struct ttys *ttyp, u_char *if_bptr, int if_n)
 {
 	DEBUG_CALL("ppp_input");
 	DEBUG_ARG("ttyp = %lx", (long)ttyp);
@@ -549,13 +516,7 @@ ppp_input(ttyp, if_bptr, if_n)
  * Note: This is only called on PROT_IP packets, all other protocol
  * packets use output()
  */
-int
-ppp_encap(inbptr, m, unit, ppp_esc, proto)
-	char *inbptr;
-	struct mbuf *m;
-	int unit;
-	int ppp_esc;
-	int proto;
+int ppp_encap(char *inbptr, struct mbuf *m, int unit, int ppp_esc, int proto)
 {
 	int i;
 	int slen, clen;
@@ -629,11 +590,7 @@ ppp_encap(inbptr, m, unit, ppp_esc, proto)
  * this is the output routine used by the link level protocols
  * it writes directly to the tty
  */
-void
-output(unit, p, len)
-	int unit;
-	u_char *p;
-	int len;
+void output(int unit, u_char *p, int len)
 {
 #ifndef FULL_BOLT
         u_char outgoing[IF_OUTBUFFSIZE];
@@ -687,9 +644,7 @@ output(unit, p, len)
 #endif
 }
 
-void
-die(status)
-	int status;
+void die(int status)
 {
 	slirp_exit(status);
 }
@@ -699,9 +654,7 @@ die(status)
  *  we seem to be using PPP - initialise a few things
  */
 
-void
-ppp_init(ttyp)
-	struct ttys *ttyp;
+void ppp_init(struct ttys *ttyp)
 {
 	int  i;
 	
@@ -731,9 +684,7 @@ ppp_init(ttyp)
  * tell the user what options we are going to negotiate
  * and then start the negotiation process 
  */
-void
-ppp_start(unit)
-	int unit;
+void ppp_start(int unit)
 {
 	lcp_lowerup(unit);
 	lcp_open(unit);
@@ -746,45 +697,35 @@ ppp_start(unit)
  */
 
 #ifndef HAVE_RANDOM
-long
-random ()
+long random(void)
 {
 	return rand();
 }
 #endif
 
 #ifndef HAVE_SRANDOM
-void
-srandom (seed)
-	int seed;
+void srandom (int seed)
 {
 	srand(seed);
 }
 #endif
 
 #ifndef HAVE_INDEX
-char *
-index(s, c)
-	const char *s;
-	int c;
+char * index(const char *s, int c)
 {
 	return strchr(s, c);
 }
 #endif
 
 #ifndef HAVE_BCMP
-int
-bcmp(s1, s2, n)
-	const void *s1, *s2;
-	int n;
+int bcmp(const void *s1, const void *s2, int n)
 {
 	return memcmp(s1, s2, n);
 }
 #endif
 
 #ifndef HAVE_GETHOSTID
-long 
-gethostid()
+long gethostid()
 {
 	return 12345678;
 }
@@ -798,11 +739,10 @@ gethostid()
  * defined to return int, and in some others it is void
  */  
 
-void
 #ifdef __STDC__
-real_do_syslog(int priority, const char *format, ...)
+void real_do_syslog(int priority, const char *format, ...)
 #else
-real_do_syslog(va_alist) va_dcl
+void real_do_syslog(va_alist) va_dcl
 #endif
 {
 	va_list argp;
@@ -830,30 +770,22 @@ real_do_syslog(va_alist) va_dcl
  * return an acceptable value
  */
 
-int
-sifaddr (unit, our_adr, his_adr, net_mask)
-	int unit, our_adr, his_adr, net_mask;
+int sifaddr (int unit, int our_adr, int his_adr, int net_mask)
 {
         return 1;
 }
 
-int
-cifaddr (unit, our_adr, his_adr)
-	int unit, our_adr, his_adr;
+int cifaddr (int unit, int our_adr, int his_adr)
 {
         return 1;
 }
 
-int
-sifdefaultroute (unit, gateway)
-	int unit, gateway;
+int sifdefaultroute (int unit, int gateway)
 {
         return 1;
 }
 
-int
-cifdefaultroute (unit, gateway)
-	int unit, gateway;
+int cifdefaultroute (int unit, int gateway)
 {
         return 1;
 }
@@ -862,56 +794,36 @@ cifdefaultroute (unit, gateway)
 /* I don't know why blocking this out solves so many problems with RedHat 6.
    But I'll do it anyway.  It doesn't do much of anything, and only ppp/auth.c
    called it to begin with. --Kelly */
-int
-logwtmp(line, name, host)
-	char *line, *name, *host;
+int logwtmp(char *line, char *name, char *host)
 {
         return 1;
 }
 #endif /* I like these better than worrying about comment nesting. :P */
 
-int
-cifproxyarp (unit, his_adr)
-	int unit;
-	u_long his_adr;
+int cifproxyarp (int unit, u_long his_adr)
 {
         return 1;
 
 }
 
-int
-sifproxyarp (unit, his_adr)
-	int unit;
-	u_long his_adr;
+int sifproxyarp (int unit, u_long his_adr)
 {
         return 1;
 }
 
 
-int
-run_program(prog, args, must_exist)
-	char *prog, **args;
-	int must_exist;
+int run_program(char *prog, char **args, int must_exist)
 {
         return 0;
 }
 
-void
-print_string(p, len, printer, arg)
-    char *p;
-    int len;
-    void (*printer) _P((void *, char *, ...));
-    void *arg;
+void print_string(char *p, int len, void (*printer)(void *, char *, ...), void *arg)
 {
 
 }
 
 
-int
-ccp_test(unit, ccp_option, opt_len, for_transmit)
-	int unit;
-	u_char *ccp_option;
-	int opt_len, for_transmit;
+int ccp_test(int unit, u_char *ccp_option, int opt_len, int for_transmit)
 {
 	int nb;
 	struct compressor **cp;
@@ -948,9 +860,7 @@ ccp_test(unit, ccp_option, opt_len, for_transmit)
 	return 0;
 }
 
-void
-ccp_flags_set(unit, isopen, isup)
-    int unit, isopen, isup;
+void ccp_flags_set(int unit, int isopen, int isup)
 {
 	struct ttys *ttyp = ttys_unit[unit];
 	int x = ttyp->sc_flags;
@@ -962,9 +872,7 @@ ccp_flags_set(unit, isopen, isup)
 }
 
 
-int
-ccp_fatal_error(unit)
-	int unit;
+int ccp_fatal_error(int unit)
 {
 	struct ttys *ttyp = ttys_unit[unit];
 	
@@ -976,12 +884,7 @@ ccp_fatal_error(unit)
  * Handle a CCP packet.  rcvd' is 1 if the packet was received,
  * 0 if it is about to be transmitted.
  */
-void
-ppp_ccp(ttyp, dp, len, rcvd)
-	struct ttys *ttyp;
-	u_char *dp;
-	int len;
-	int rcvd;
+void ppp_ccp(struct ttys *ttyp, u_char *dp, int len, int rcvd)
 {
 	u_char *ep;
 	int slen;
@@ -1049,9 +952,7 @@ ppp_ccp(ttyp, dp, len, rcvd)
 /*
 *  * CCP is down; free (de)compressor state if necessary.
 *  */
-void
-ppp_ccp_closed(ttyp)
-	struct ttys *ttyp;
+void ppp_ccp_closed(struct ttys *ttyp)
 {
 	if (ttyp->sc_xc_state) {
 		(*ttyp->sc_xcomp->comp_free)(ttyp->sc_xc_state);
