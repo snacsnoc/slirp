@@ -52,10 +52,7 @@ u_int16_t ip_id;
  * The mbuf chain containing the packet will be freed.
  * The mbuf opt, if present, will not be freed.
  */
-int
-ip_output(so, m0)
-	struct socket *so;
-	struct mbuf *m0;
+int ip_output(struct socket *so, struct mbuf *m0)
 {
 	register struct ip *ip;
 	register struct mbuf *m = m0;
