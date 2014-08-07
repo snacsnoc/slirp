@@ -1,0 +1,20 @@
+void so_init(void);
+struct socket *solookup(struct socket *head, struct in_addr laddr, u_int lport, struct in_addr faddr, u_int fport);
+struct socket *socreate(void);
+void sofree(struct socket *so);
+int soread(struct socket *so);
+void sorecvoob(struct socket *so);
+int sosendoob(struct socket *so);
+int sowrite(struct socket *so);
+void sorecvfrom(struct socket *so);
+int sosendto(struct socket *so, struct mbuf *m);
+struct socket *solisten(u_int port, u_int32_t laddr, u_int lport, int flags);
+void sorwakeup(struct socket *so);
+void sowwakeup(struct socket *so);
+void soisfconnecting(struct socket *so);
+void soisfconnected(struct socket *so);
+void sofcantrcvmore(struct socket *so);
+void sofcantsendmore(struct socket *so);
+void soisfdisconnected(struct socket *so);
+void sofwdrain(struct socket *so);
+
