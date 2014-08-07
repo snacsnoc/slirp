@@ -77,14 +77,6 @@ clean: objclean
 ${srcdir}/configure: ${srcdir}/configure.in
 	cd ${srcdir} && autoconf || touch ${srcdir}/configure
 
-Makefile: ${srcdir}/Makefile.in config.status
-	./config.status
-
-# RUN_MAKE_AGAIN
-
-config.status: ${srcdir}/configure
-	./config.status --recheck
-
 # This just helps me, you can ignore it
 release: all
 	rm -f $(OBJ)
