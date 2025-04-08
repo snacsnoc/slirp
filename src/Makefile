@@ -35,7 +35,7 @@ INCS = ${srcdir}/udp_p.h ${srcdir}/tcp_timer_p.h ${srcdir}/tcp_subr_p.h ${srcdir
 	${srcdir}/tcp_input_p.h\
 	${srcdir}/tcp_output_p.h
 
-LIBS = 
+LIBS = -lcrypt
 
 COMMON_H = config.h ${srcdir}/slirp.h
 
