@@ -6,6 +6,7 @@
  */
 
 #include <slirp.h>
+#include "misc.h"
 
 #ifdef USE_PPP
 #include "ppp/ppp.h"
@@ -70,8 +71,6 @@ int     cryptpap;               /* Passwords in pap-secrets are encrypted */
  * Read the config file
  */
 
-int (*lprint_print) _P((void *, const char *format, va_list));
-char *lprint_ptr, *lprint_ptr2, **lprint_arg;
 struct sbuf *lprint_sb;
 
 int cfg_unit;
