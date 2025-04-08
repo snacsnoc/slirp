@@ -28,7 +28,7 @@ static char rcsid[] = "$Id: pppdfncs.c,v 1.1.1.2 2001/11/05 21:02:50 strredwolf 
 #include <errno.h>
 #include <fcntl.h>
 #include <syslog.h>
-#include <utmp.h>
+#include <utmpx.h>
 #include <pwd.h>
 #include <sys/param.h>
 #include <sys/types.h>
